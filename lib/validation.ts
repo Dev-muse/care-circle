@@ -4,7 +4,7 @@ export const UserFormValidation = z.object({
   name: z
     .string()
     .min(2, "name must be at least 2 characters.")
-    .max(2, "name must be max 50 characters."),
+    .max(50, "name must be max 50 characters."),
   email: z.string().email("Invalid email address format"),
   phone: z
     .string()
@@ -13,3 +13,4 @@ export const UserFormValidation = z.object({
       "Invalid phone number"
     ),
 });
+ 

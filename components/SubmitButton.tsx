@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "./ui/button";
 import Image from "next/image";
-
+ 
 interface ButtonProps {
   isLoading: boolean;
   children: React.ReactNode;
@@ -9,7 +9,7 @@ interface ButtonProps {
 }
 
 const SubmitButton = ({ isLoading, className, children }: ButtonProps) => {
-  return (
+   return (
     <Button
       type="submit"
       disabled={isLoading}

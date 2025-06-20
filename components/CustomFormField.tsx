@@ -1,5 +1,8 @@
 "use client";
 
+// fixes error with e164 not found
+import { E164Number } from "libphonenumber-js/core";
+// fixes error with e164 not found
 import React, { useState } from "react";
 import {
   FormControl,
@@ -35,26 +38,25 @@ interface CustomProps {
 }
 
 const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
-  const { control, fieldType, name, label, placeholder, iconAlt, iconSrc } =
-    props;
+  const { control, fieldType, name, label, placeholder, iconAlt, iconSrc } = props;
   switch (fieldType) {
     case FormFieldType.INPUT:
       return (
-        <div className="flex rounded-md border border-dark-500 bg-dark-400">
+        <div className="flex rounded-md text-white border border-dark-500 bg-dark-400">
           {iconSrc && (
             <Image
               src={iconSrc}
               height={24}
               width={24}
               alt={iconAlt || "alt"}
-              className="ml-2"
+              className="ml-2 "
             />
           )}
           <FormControl>
             <Input
               placeholder={placeholder}
               {...field}
-              className="shad-input border-0"
+              className="shad-input  border-0"
             />
           </FormControl>
         </div>
@@ -64,7 +66,7 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         <FormControl>
           <PhoneInput
             placeholder={placeholder}
-            defaultCountry="US"
+            defaultCountry="GB"
             international
             withCountryCallingCode
             value={field.value as E164Number | undefined}
@@ -74,13 +76,12 @@ const RenderField = ({ field, props }: { field: any; props: CustomProps }) => {
         </FormControl>
       );
     default:
-      break;
+      return null;
   }
 };
 
 const CustomFormField = (props: CustomProps) => {
-  const { control, fieldType, name, label, placeholder, iconAlt, iconSrc } =
-    props;
+   const { control, name, label,fieldType } = props;
   return (
     <FormField
       control={control}
@@ -88,8 +89,8 @@ const CustomFormField = (props: CustomProps) => {
       render={({ field }) => (
         <FormItem className="flex-1">
           {fieldType !== FormFieldType.CHECKBOX && label && (
-            <FormLabel>{label}</FormLabel>
-          )}
+            <FormLabel className="text-white ">{label}</FormLabel>
+           )}
 
           <RenderField field={field} props={props} />
           <FormMessage className="shad-error" />

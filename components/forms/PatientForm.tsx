@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import CustomFormField from "../CustomFormField";
 import SubmitButton from "../SubmitButton";
 import { useState } from "react";
 import { UserFormValidation } from "@/lib/validation";
 import { useRouter } from "next/navigation";
+import { createUser } from "@/lib/actions/patient.actions";
 
 export enum FormFieldType {
   INPUT = "input",
@@ -51,14 +51,15 @@ const PatientForm = () => {
         email,
         phone,
       };
-
-      // const user = await createUser(userData);
-      // if (user) {
-      //   router.push(`/patients/${user.$id}/register`);
-      // }
+ 
+      const user = await createUser(userData)
+      if (user) {
+        router.push(`/patients/${user.$id}/register`);
+      }
     } catch (error) {
       console.log(error);
     }
+    setIsLoading(false);
   }
 
   return (
@@ -71,8 +72,7 @@ const PatientForm = () => {
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          name="name
-          "
+          name="name"
           label="Full name"
           placeholder="John Doe"
           iconSrc="/assets/icons/user.svg"
@@ -81,8 +81,7 @@ const PatientForm = () => {
         <CustomFormField
           fieldType={FormFieldType.INPUT}
           control={form.control}
-          name="Email
-          "
+          name="email"
           label="Email"
           placeholder="John@gmail.com"
           iconSrc="/assets/icons/email.svg"
@@ -91,8 +90,7 @@ const PatientForm = () => {
         <CustomFormField
           fieldType={FormFieldType.PHONE_INPUT}
           control={form.control}
-          name="Phone
-          "
+          name="phone"
           label="Phone number"
           placeholder="(555) 545-4935"
         />
